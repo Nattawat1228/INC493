@@ -21,7 +21,7 @@ VescToOdom::VescToOdom(const rclcpp::NodeOptions & options)
       publish_tf_(true), // Always publish TF
       x_(0.0),
       y_(0.0),
-      wheelbase_(0.35),
+      wheelbase_(0.3),
       theta_(0.0), //initial heading angle
       motor_speed_(0.0), // Initialize speed
       servo_angle_(0.0) // Initialize steering angle
@@ -61,7 +61,7 @@ void VescToOdom::motorSpeedCallback(const Float64::SharedPtr msg)
 {
   // Process received motor speed message
   double read_speed_ = msg->data;
-  motor_speed_ = map(read_speed_, -10000.0, 10000.0, -3.0, 3.0);
+  motor_speed_ = map(read_speed_, -2500.0, 2500.0, -3.0, 3.0);
 }
 
 void VescToOdom::servoAngleCallback(const Float64::SharedPtr msg)
@@ -78,7 +78,7 @@ void VescToOdom::updateCallback()
   // Propagate odometry
   double x_dot = motor_speed_ * cos(theta_);
   double y_dot = motor_speed_ * sin(theta_);
-  double theta_dot = motor_speed_ / wheelbase_ * tan(servo_angle_);
+  double theta_dot = motor_speed_ / wheelbase_ * tan(servo_angle_) ;
   double dt = 0.1; // Set sampling time to 0.1 sec
   theta_ += theta_dot * dt;
   x_ += x_dot * dt;

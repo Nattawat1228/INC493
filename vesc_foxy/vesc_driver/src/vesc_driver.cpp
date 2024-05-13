@@ -368,7 +368,7 @@ void VescDriver::joyCallback(const sensor_msgs::msg::Joy::SharedPtr joy)
     double angular_vel = joy->axes[3];
 
     // Convert linear and angular velocities to VESC motor controller commands
-    double motor_speed = map(linear_vel, -1.0, 1.0, -10000.0, 10000.0);
+    double motor_speed = map(linear_vel, -1.0, 1.0, -2500.0,2500.0);
     vesc_.setSpeed(motor_speed);
     // Publish motor_speed
     //auto motor_speed_msg = Float64();
